@@ -1,0 +1,7 @@
+[package]
+name = "day2"
+version = "0.1.0"
+authors = ["Laura Ketola <me@nindwen.blue>"]
+
+[dependencies]
+failure = "0.1.1"
