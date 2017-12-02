@@ -24,17 +24,9 @@ pub fn checksum(filename: &str) -> Result<i32, Error> {
     let sheet = read_file(filename)?;
     let mut sum = 0;
     for row in sheet {
-        let mut min = *(row.first().expect("Empty row"));
-        let mut max = min;
-        for number in row {
-            if number < min {
-                min = number;
-            } else if number > max {
-                max = number;
-            }
-        }
-        let difference = max - min;
-        sum += difference;
+        let min = row.iter().min().unwrap();
+        let max = row.iter().max().unwrap();
+        sum += max - min;
     }
     Ok(sum)
 }
