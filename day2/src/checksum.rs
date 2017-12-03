@@ -1,4 +1,3 @@
-
 use std::fs::File;
 use std::io::prelude::*;
 use failure::Error;
@@ -22,28 +21,26 @@ fn read_file(filename: &str) -> Result<Vec<Vec<i32>>, Error> {
 
 pub fn checksum(filename: &str) -> Result<i32, Error> {
     let sheet = read_file(filename)?;
-    let mut sum = 0;
-    for row in sheet {
-        let min = row.iter().min().unwrap();
-        let max = row.iter().max().unwrap();
-        sum += max - min;
-    }
-    Ok(sum)
+    Ok(sheet.iter().fold(0, |acc, row| {
+        let min = row.iter().min().unwrap_or(&0);
+        let max = row.iter().max().unwrap_or(&0);
+        acc + max - min
+    }))
 }
 
 pub fn checksum_part2(filename: &str) -> Result<i32, Error> {
     let sheet = read_file(filename)?;
-    let mut sum = 0;
-    for row in sheet {
-        for divisor in &row {
-            for divident in &row {
-                if divisor != divident && divisor % divident == 0 {
-                    let division = divisor.checked_div(*divident)
-                        .expect("Division by zero");
-                    sum += division;
+    Ok(sheet.iter().fold(0, |acc, row| {
+        let mut division = 0;
+        for numerator in row {
+            for denominator in row {
+                if denominator != &0 
+                    && numerator != denominator 
+                    && numerator % denominator == 0 {
+                    division = numerator / denominator;
                 }
             }
         }
-    }
-    Ok(sum)
+        return acc + division;
+    }))
 }
