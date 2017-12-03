@@ -10,7 +10,7 @@ fn read_file(filename: &str) -> Result<Vec<Vec<u32>>, Error> {
 
     for line in contents.lines() {
         sheet.push(Vec::new());
-        for column in line.split("\t") {
+        for column in line.split('\t') {
             let number: u32 = column.parse()?;
             sheet.last_mut().unwrap().push(number);
         }
@@ -41,6 +41,6 @@ pub fn checksum_part2(filename: &str) -> Result<u32, Error> {
                 }
             }
         }
-        return acc + division;
+        acc + division
     }))
 }

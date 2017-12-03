@@ -6,7 +6,7 @@ fn str_to_vec(input: &str) -> Vec<u32> {
     vector
 }
 
-fn summate(list: Vec<u32>, offset: usize) -> u32 {
+fn summate(list: &[u32], offset: usize) -> u32 {
     let mut sum = 0;
     for (i, item) in list.iter().enumerate() {
         let index = (i + offset) % list.len();
@@ -19,12 +19,12 @@ fn summate(list: Vec<u32>, offset: usize) -> u32 {
 
 pub fn part_one_sum(input: &str) -> u32 {
     let input = str_to_vec(input);
-    summate(input, 1)
+    summate(&input, 1)
 }
 
 pub fn part_two_sum(input: &str) -> u32 {
     let input = str_to_vec(input);
     let halfway = input.len() / 2;
-    summate(input, halfway)
+    summate(&input, halfway)
 }
 
