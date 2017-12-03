@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use failure::Error;
 
-fn read_file(filename: &str) -> Result<Vec<Vec<i32>>, Error> {
+fn read_file(filename: &str) -> Result<Vec<Vec<u32>>, Error> {
     let mut f = File::open(filename)?;
     let mut contents = String::new();
     let mut sheet = Vec::new();
@@ -11,7 +11,7 @@ fn read_file(filename: &str) -> Result<Vec<Vec<i32>>, Error> {
     for line in contents.lines() {
         sheet.push(Vec::new());
         for column in line.split("\t") {
-            let number: i32 = column.parse()?;
+            let number: u32 = column.parse()?;
             sheet.last_mut().unwrap().push(number);
         }
     }
@@ -19,7 +19,7 @@ fn read_file(filename: &str) -> Result<Vec<Vec<i32>>, Error> {
     Ok(sheet)
 }
 
-pub fn checksum(filename: &str) -> Result<i32, Error> {
+pub fn checksum(filename: &str) -> Result<u32, Error> {
     let sheet = read_file(filename)?;
     Ok(sheet.iter().fold(0, |acc, row| {
         let min = row.iter().min().unwrap_or(&0);
@@ -28,7 +28,7 @@ pub fn checksum(filename: &str) -> Result<i32, Error> {
     }))
 }
 
-pub fn checksum_part2(filename: &str) -> Result<i32, Error> {
+pub fn checksum_part2(filename: &str) -> Result<u32, Error> {
     let sheet = read_file(filename)?;
     Ok(sheet.iter().fold(0, |acc, row| {
         let mut division = 0;
