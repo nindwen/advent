@@ -14,4 +14,10 @@ mod tests {
         let result = checksum::checksum_part2("test_data2.txt").unwrap();
         assert_eq!(result, 9);
     }
+
+    #[test]
+    #[should_panic]
+    fn null() {
+        let _ = checksum::checksum_part2("test_data_null.txt").unwrap();
+    }
 }
